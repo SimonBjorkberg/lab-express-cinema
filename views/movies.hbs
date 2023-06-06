@@ -3,5 +3,12 @@
 </h1>
 <h3>Click on the movie to check the showtimes!</h3>
 
-<div>
+<div id="container">
+    {{#each movies}}
+    <div class="movie">
+        <img src="{{this.img}}" alt="test">
+        <h3>{{this.title}}</h3>
+        <a href="/">See more</a>
+    </div>
+    {{/each}}
 </div>

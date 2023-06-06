@@ -35,11 +35,9 @@ app.get("/movies", (req, res) => {
   Movie.find()
     .then((movies) => {
       console.log(movies);
-
       res.render("movies", { movies });
     })
     .catch((err) => console.log(err));
-  res.render("movies");
 });
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
