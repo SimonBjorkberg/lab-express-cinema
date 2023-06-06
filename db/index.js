@@ -17,6 +17,7 @@ mongoose
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
     );
   })
+  .then(() => Movie.deleteMany())
   .then(() => {
     movies.forEach((movie) => {
       Movie.create({

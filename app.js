@@ -4,6 +4,7 @@ require("dotenv/config");
 
 // ℹ️ Connects to the database
 require("./db");
+const Movie = require('./models/Movie.model')
 
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
@@ -12,6 +13,7 @@ const express = require("express");
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
+const { default: mongoose } = require("mongoose");
 
 const app = express();
 
@@ -26,13 +28,19 @@ const capitalized = (string) =>
 app.locals.title = `${capitalized(projectName)}- Generated with Ironlauncher`;
 
 // 👇 Start handling routes here
-
 app.get("/", (req, res) => {
   res.render("index");
 });
-app.get('/movies', (req, res) => {
-    res.render('movies')
-})
+app.get("/movies", (req, res) => {
+  Movie.find()
+    .then((movies) => {
+      console.log(movies);
+
+      res.render("movies", { movies });
+    })
+    .catch((err) => console.log(err));
+  res.render("movies");
+});
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const movieSchema = new Schema({
   title: {
     type: String,
+    unique: true,
   },
   director: {
     type: String,
