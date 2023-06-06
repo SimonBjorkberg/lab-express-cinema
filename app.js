@@ -31,14 +31,28 @@ app.locals.title = `${capitalized(projectName)}- Generated with Ironlauncher`;
 app.get("/", (req, res) => {
   res.render("index");
 });
+
 app.get("/movies", (req, res) => {
   Movie.find()
     .then((movies) => {
-      console.log(movies);
       res.render("movies", { movies });
     })
     .catch((err) => console.log(err));
 });
+
+app.get('/movie-info/:id', (req, res) => {
+  const movieId = req.params.id;
+
+    Movie.find({ _id: movieId }, (err, movie) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      console.log(movie[0])
+      res.render('movie-info', { movie: movie[0]})
+    }
+  })
+})
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);

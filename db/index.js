@@ -17,16 +17,19 @@ mongoose
       `Connected to Mongo! Database name: "${x.connections[0].name}"`
     );
   })
-  .then(() => Movie.deleteMany())
   .then(() => {
     movies.forEach((movie) => {
-      Movie.create({
-        title: movie.title,
-        director: movie.director,
-        stars: movie.stars,
-        img: movie.image,
-        desc: movie.description,
-        showtimes: movie.showtimes,
+      Movie.findOne({ title: movie.title }).then((existingMovie) => {
+        if (!existingMovie) {
+          Movie.create({
+            title: movie.title,
+            director: movie.director,
+            stars: movie.stars,
+            img: movie.image,
+            desc: movie.description,
+            showtimes: movie.showtimes,
+          });
+        }
       });
     });
   })
